@@ -98,9 +98,20 @@ a{color:inherit}
 
 /* ---------- hero ---------- */
 .hero__grid{display:grid;grid-template-columns:1.02fr .98fr;gap:var(--s5);align-items:center}
-.hero h1{font-size:clamp(36px,3.6vw,80px);letter-spacing:-0.03em}
+.hero h1{font-size:clamp(40px,5.4vw,76px);line-height:1.0;letter-spacing:-0.035em;max-width:13ch}
 .hero h1 em{font-style:normal;color:var(--sign)}
-.hero__sub{margin-top:var(--s3);font-size:clamp(17px,1.6vw,20px);color:var(--grey);max-width:44ch}
+.hero h2{
+  margin-top:var(--s2);font-size:clamp(20px,2.1vw,29px);
+  line-height:1.15;letter-spacing:-0.02em;color:var(--sign);max-width:24ch;
+}
+.hero__sub{
+  margin-top:var(--s3);font-size:clamp(16px,1.45vw,18px);line-height:1.6;
+  color:var(--grey);max-width:52ch;
+}
+.hero__sub em{
+  display:block;margin-top:var(--s2);font-style:normal;
+  font-weight:600;color:var(--ink);
+}
 .hero__cta{margin-top:var(--s4);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .hero__note{font-family:var(--mono);font-size:13px;color:var(--ink);letter-spacing:.02em;display:flex;align-items:center;gap:8px}
 .hero__note::before{content:"";width:9px;height:9px;background:var(--sign);border-radius:50%;flex:none}
@@ -254,11 +265,11 @@ a{color:inherit}
       <div>
         <h1>From Labels to Portals</h1>
         <h2>Have more to say than fits the label?</h2>
-        <p class="hero__sub">Labels are everywhere: a museum caption, a street sign, a trifold poster, a slide show, a shelf tag, a postcard. But they are fixed in time and space. What if, instead, a label could be a portal for more?A museum caption, a street sign, a trifold poster, a slide show, a shelf tag, a postcard, all those are labels we use to talk to others. But they are limited and fixed in time and space. What if, instead, a label could be a portal for more - stories, experiences, insights? 
+        <p class="hero__sub">A museum caption, a street sign, a trifold poster, a slide show, a shelf tag, a postcard, all those are labels we use to talk to others. But they are limited and fixed in time and space. What if, instead, a label could be a portal for more—stories, experiences, insights? 
           <em>With Cities and Desire, you can use AR to make that possible.</em></p>
         <div class="hero__cta">
           <a class="btn" href="#in-use">Show me what's possible</a>
-          <a class="btn btn--ghost" href="#contact">See how it works</a>
+          <a class="btn btn--ghost" href="#platform">See how it works</a>
           <span class="hero__note">No app to install—yours or theirs.</span>
         </div>
       </div>
