@@ -168,12 +168,34 @@ a{color:inherit}
 .panel--how .body{margin-left:0}
 
 /* ---------- rail ---------- */
-.rail__top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);margin:0 0 var(--s3)}
+.rail__top{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);margin:0 0 var(--s3)}
+.rail__nav{display:flex;gap:8px;flex:none}
+.rail__btn{
+  width:44px;height:44px;border:0;border-radius:2px;cursor:pointer;
+  background:none;color:var(--sign);box-shadow:inset 0 0 0 2px var(--sign);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity .25s ease,background .15s ease,color .15s ease;
+}
+.rail__btn svg{width:20px;height:20px;display:block}
+.rail__btn:hover{background:var(--sign);color:#fff}
+.rail__btn[disabled]{opacity:.22;cursor:default}
+.rail__btn[disabled]:hover{background:none;color:var(--sign)}
 .rail__scroll{display:flex;gap:var(--s2);overflow-x:auto;scroll-snap-type:x mandatory;padding:0 var(--edge) var(--s2);margin:0 calc(var(--edge)*-1);scrollbar-width:none;-ms-overflow-style:none}
 .rail__scroll::-webkit-scrollbar{display:none}
 .band--tint .card{background:var(--paper)}
 .card{scroll-snap-align:start;flex:0 0 306px;background:var(--paper-2);border-radius:2px;padding:var(--s3);display:flex;flex-direction:column;gap:10px;border-top:4px solid var(--sign)}
 .card:hover{background:#fff}
+.card--ask{background:var(--sign-dk);color:#fff;border-top-color:var(--yellow)}
+.card--ask:hover{background:#00452F}
+.band--tint .card--ask{background:var(--sign-dk)}
+.card--ask .card__tag{color:rgba(255,255,255,.8)}
+.card--ask p{color:rgba(255,255,255,.86)}
+.card--ask a{
+  margin-top:auto;color:var(--yellow);
+  text-decoration:underline;text-underline-offset:3px;
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em;
+}
+.card--ask a:hover{color:#fff}
 .card h3{font-size:20px}
 .card p{font-size:15px;color:var(--grey)}
 .card__tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sign)}
@@ -265,9 +287,8 @@ a{color:inherit}
       <div>
         <h1>From Labels to Portals</h1>
         <h2>Have more to say than fits the label?</h2>
-        <p class="hero__sub">A museum caption, a street sign, a trifold poster, a slide show, a shelf tag, a postcard, all those are labels we use to talk to others. But there is just so much you can say on a label. 
-          <em>With Cities and Desire, anyone can use AR to expand labels into portals for more: more connections, more experiences, more stories.
-          </em></p>
+        <p class="hero__sub">A museum caption, a street sign, a trifold poster, a slide show, a shelf tag, a postcard, all those are labels we use to talk to others. But they are limited and fixed in time and space. What if, instead, a label could be a portal for more—stories, experiences, insights? 
+          <em>With Cities and Desire, you can use AR to make that possible.</em></p>
         <div class="hero__cta">
           <a class="btn" href="#in-use">Show me what's possible</a>
           <a class="btn btn--ghost" href="#platform">See how it works</a>
@@ -363,14 +384,17 @@ a{color:inherit}
   <div class="wrap">
     <p class="eyebrow eyebrow--side">In use</p>
     <div class="rail__top">
-      <h2>From labels to portals with AR.</h2>
-      <p class="eyebrow">Scroll →</p>
+      <h2>Open endless possibilities with AR.</h2>
+      <div class="rail__nav">
+        <button class="rail__btn" id="railPrev" type="button" aria-label="Previous" aria-controls="rail"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="rail__btn" id="railNext" type="button" aria-label="Next" aria-controls="rail"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </div>
     </div>
-    <div class="rail__scroll" tabindex="0" role="region" aria-label="Use cases, scrollable">
+    <div class="rail__scroll" id="rail" tabindex="0" role="region" aria-label="Use cases, scrollable">
       <article class="card">
         <p class="card__tag">Museums and galleries</p>
-        <h3>The label that holds more</h3>
-        <p>The conservator's voice, the excavation footage, a version written for an eight-year-old—all of it beside the object, with nothing drilled or mounted.</p>
+        <h3>Tell the story your label can't</h3>
+        <p>Your conservator's voice, your excavation footage, the version written for an eight-year-old—all of it standing beside the object, with nothing drilled or mounted.</p>
       </article>
       <article class="card">
         <p class="card__tag">Property and development</p>
@@ -385,17 +409,23 @@ a{color:inherit}
       <article class="card">
         <p class="card__tag">Visitor and welcome centres</p>
         <h3>A step up from the trifold</h3>
-        <p>The room already has a budget for a foam model and a folded leaflet, and both go out of date the day the design changes. This one doesn't.</p>
+        <p>You already budget for a foam model and a folded leaflet, and both go out of date the day the design changes. This one doesn't.</p>
       </article>
       <article class="card">
         <p class="card__tag">Campuses and trails</p>
-        <h3>One design, every stop</h3>
-        <p>Post the same printed marker at every stop on a trail, campus, or corridor. Each one shows the content for that spot, and you get numbers per stop without building per stop.</p>
+        <h3>Guide them the whole way round</h3>
+        <p>Post the same printed marker at every stop on your trail, campus, or corridor. Each one shows the content for where it's standing, and you get numbers per stop without building per stop.</p>
       </article>
       <article class="card">
         <p class="card__tag">Shops and showrooms</p>
-        <h3>The long version, on the shelf</h3>
-        <p>A card by the till, a poster in the window, a tag on the shelf. Change what it says whenever the stock does. The shelf stays a shelf.</p>
+        <h3>Let the tag say more</h3>
+        <p>A card by your till, a poster in the window, a tag on the shelf. Change what it says whenever your stock does, and the shelf still looks like a shelf.</p>
+      </article>
+      <article class="card card--ask">
+        <p class="card__tag">Something else</p>
+        <h3>Tell us what you'd open.</h3>
+        <p>Tell us what you want to show people, and where they'll be standing when they see it. We'll work out together what it should be.</p>
+        <a href="#contact">Get in touch →</a>
       </article>
     </div>
   </div>
@@ -493,6 +523,27 @@ a{color:inherit}
     r.addEventListener('pointermove',move);
     r.addEventListener('pointerdown',move);
     r.addEventListener('touchmove',function(e){e.preventDefault();},{passive:false});
+  }
+
+  var rail=document.getElementById('rail'),
+      prev=document.getElementById('railPrev'),
+      next=document.getElementById('railNext');
+  if(rail && prev && next){
+    function step(){
+      var card=rail.querySelector('.card');
+      if(!card) return rail.clientWidth;
+      var gap=parseFloat(getComputedStyle(rail).columnGap||16);
+      return card.offsetWidth+(isNaN(gap)?16:gap);
+    }
+    function sync(){
+      prev.disabled = rail.scrollLeft <= 2;
+      next.disabled = rail.scrollLeft >= rail.scrollWidth-rail.clientWidth-2;
+    }
+    prev.addEventListener('click',function(){rail.scrollBy({left:-step(),behavior:'smooth'});});
+    next.addEventListener('click',function(){rail.scrollBy({left:step(),behavior:'smooth'});});
+    rail.addEventListener('scroll',sync,{passive:true});
+    window.addEventListener('resize',sync);
+    sync();
   }
 
   var f=document.getElementById('form'), s=document.getElementById('status');
