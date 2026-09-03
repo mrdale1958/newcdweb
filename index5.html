@@ -42,6 +42,7 @@ h2{font-size:clamp(29px,3.4vw,44px)}
 p{margin:0}
 a{color:inherit}
 
+section[id]{scroll-margin-top:100px}
 .skip{position:absolute;left:-9999px}
 .skip:focus{left:var(--edge);top:12px;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:99}
 :focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
@@ -59,7 +60,7 @@ a{color:inherit}
 /* ---------- the mark: a street sign blade, deliberately oversized ---------- */
 .blade{display:block;flex:none}
 .blade--nav{width:268px;height:56px}
-.blade--foot{width:214px;height:44px}
+.blade--foot{width:280px;height:58px}
 
 /* ---------- nav ---------- */
 .nav{position:sticky;top:0;z-index:20;background:rgba(242,244,241,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--grey-line)}
@@ -222,6 +223,27 @@ a{color:inherit}
 .field input,.field textarea{font-family:var(--body);font-size:16px;color:var(--ink);background:#fff;border:1px solid var(--grey-line);border-radius:2px;padding:11px 12px}
 .field textarea{min-height:112px;resize:vertical}
 .hp{position:absolute;left:-9999px}
+.drop{
+  position:relative;border:1px dashed rgba(255,255,255,.5);border-radius:2px;
+  background:var(--sign-dk);padding:var(--s3);text-align:center;
+  transition:border-color .15s ease,background .15s ease;
+}
+.drop.is-over{border-color:var(--yellow);background:#00452F}
+.drop input[type=file]{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.drop.has-file input[type=file]{pointer-events:none}
+.drop__hint{font-size:14px;color:rgba(255,255,255,.85)}
+.drop__hint u{text-underline-offset:3px}
+.drop input[type=file]:focus-visible ~ .drop__hint{outline:3px solid var(--yellow);outline-offset:6px}
+.drop__preview{position:relative;display:flex;align-items:center;gap:var(--s2);text-align:left}
+.drop__preview img{width:64px;height:64px;object-fit:cover;border-radius:2px;background:#00452F;flex:none}
+.drop__name{font-size:14px;color:#fff;word-break:break-all}
+.drop__clear{
+  background:none;border:0;padding:0;margin-top:4px;cursor:pointer;
+  color:var(--yellow);text-decoration:underline;text-underline-offset:3px;
+  font-family:var(--mono);font-size:12.5px;
+}
+.btn[disabled]{opacity:.6;cursor:default}
+.field__err{color:var(--yellow);font-family:var(--mono);font-size:12px;margin-top:4px}
 .band--sign .field label{color:rgba(255,255,255,.78)}
 .band--sign .field input,.band--sign .field textarea{color:#fff;background:var(--sign-dk);border-color:rgba(255,255,255,.4)}
 .band--sign .field input::placeholder,.band--sign .field textarea::placeholder{color:rgba(255,255,255,.5)}
@@ -230,15 +252,12 @@ a{color:inherit}
 .band--sign .btn:hover{background:#fff}
 
 .foot{
-  position:fixed;left:0;right:0;bottom:0;z-index:15;
-  max-width:none;padding:10px var(--edge);
-  background:rgba(242,244,241,.94);backdrop-filter:blur(8px);
-  border-top:1px solid var(--grey-line);
-  display:flex;justify-content:space-between;gap:var(--s3);align-items:center;
+  padding:var(--s4) 0;border-top:1px solid var(--grey-line);
+  display:flex;justify-content:space-between;gap:var(--s4);
+  flex-wrap:wrap;align-items:center;
 }
-body{padding-bottom:84px}
 .foot__right{margin-left:auto;text-align:right;display:flex;flex-direction:column;gap:6px}
-.foot p{font-size:13px;color:var(--grey);max-width:56ch}
+.foot p{font-size:14px;color:var(--grey);max-width:48ch}
 .foot a{color:var(--sign);font-family:var(--mono);font-size:13.5px;letter-spacing:.04em;text-decoration:none}
 .foot a:hover{text-decoration:underline}
 
@@ -249,6 +268,14 @@ body{padding-bottom:84px}
   .nav__links{gap:8px}
   .btn{padding:13px 15px 11px;font-size:12.5px;letter-spacing:0.06em}
 }
+@media (max-width:760px){
+  .nav__links .btn--ghost{display:none}
+  .nav__in{padding:10px var(--edge)}
+  section[id]{scroll-margin-top:76px}
+  .foot{flex-direction:column;align-items:flex-start;gap:var(--s3)}
+  .foot__right{margin-left:0;text-align:left;align-items:flex-start}
+  .foot p{max-width:none}
+}
 @media (max-width:700px){
   .eyebrow--side{position:static;transform:none;writing-mode:horizontal-tb;display:block;margin-bottom:var(--s3);font-size:12px;letter-spacing:.16em}
   .steps3{grid-template-columns:1fr;gap:var(--s3);margin-left:0}
@@ -256,9 +283,7 @@ body{padding-bottom:84px}
 }
 @media (max-width:560px){
   .blade--nav{width:150px;height:32px}
-  .blade--foot{width:150px;height:31px}
-  .foot__right p{display:none}
-  body{padding-bottom:62px}
+  .blade--foot{width:196px;height:41px}
   .btn{padding:11px 11px 9px;font-size:11.5px;letter-spacing:0.05em}
   .nav__in{gap:10px}
 }
@@ -489,11 +514,25 @@ body{padding-bottom:84px}
         <div class="field"><label for="o">Organisation</label><input id="o" name="o" autocomplete="organization"></div>
         <div class="field field--wide"><label for="e">Email</label><input id="e" name="e" type="email" autocomplete="email"></div>
         <div class="field field--wide"><label for="m">What are you hoping to show people?</label><textarea id="m" name="m"></textarea></div>
+        <div class="field field--wide">
+          <label for="photo">A photograph, plan or leaflet (optional)</label>
+          <div class="drop" id="drop">
+            <input type="file" id="photo" name="photo" accept="image/*,.pdf" aria-describedby="dropHint">
+            <p class="drop__hint" id="dropHint">Drag one in, or <u>choose a file</u>. JPG, PNG or PDF, up to 10&nbsp;MB.</p>
+            <div class="drop__preview" id="preview" hidden>
+              <img id="previewImg" alt="" width="64" height="64">
+              <div>
+                <span class="drop__name" id="previewName"></span>
+                <button type="button" class="drop__clear" id="previewClear">Remove</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <input class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" id="hp">
         <div class="field--wide"><button class="btn" type="submit">Send it over</button></div>
         <p class="field--wide" id="status" role="status" style="font-family:var(--mono);font-size:12.5px"></p>
       </form>
-      <p class="body" style="margin-top:var(--s3);font-size:14px">We use what you send here only to reply to your enquiry. No list, no sequence, no reselling.</p>
+      <p class="body" style="margin-top:var(--s3);font-size:14px">We use what you send here only to reply to your enquiry.</p>
     </div>
   </div>
 </section>
@@ -548,17 +587,116 @@ body{padding-bottom:84px}
     sync();
   }
 
-  var f=document.getElementById('form'), s=document.getElementById('status');
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(document.getElementById('hp').value){return;}
-    var em=document.getElementById('e').value.trim();
-    if(!em || em.indexOf('@')<1){ s.textContent='Add an email address so we can reply.'; document.getElementById('e').focus(); return; }
-    // BUILD: point this at a real endpoint. Falls back to the mail client for now.
-    var body='Name: '+document.getElementById('n').value+'\nOrganisation: '+document.getElementById('o').value+'\nEmail: '+em+'\n\n'+document.getElementById('m').value;
-    window.location.href='mailto:hello@citiesanddesire.com?subject='+encodeURIComponent('Enquiry from the site')+'&body='+encodeURIComponent(body);
-    s.textContent='Opening your mail app.';
-  });
+  // ---- contact form ----
+  // Set this to the endpoint that accepts multipart/form-data (Cloudflare Worker,
+  // Formspree, Basin...). While it is empty the form falls back to the mail client,
+  // which cannot carry an attachment.
+  var ENDPOINT = '';
+  var MAX_BYTES = 10 * 1024 * 1024;
+  var OK_TYPES = /^(image\/(jpeg|png|webp|heic|heif)|application\/pdf)$/;
+
+  var form = document.getElementById('form'),
+      status = document.getElementById('status'),
+      drop = document.getElementById('drop'),
+      photo = document.getElementById('photo'),
+      preview = document.getElementById('preview'),
+      previewImg = document.getElementById('previewImg'),
+      previewName = document.getElementById('previewName'),
+      previewClear = document.getElementById('previewClear'),
+      hint = document.getElementById('dropHint'),
+      objectUrl = null;
+
+  function say(msg){ if(status) status.textContent = msg || ''; }
+
+  function clearFile(){
+    if(objectUrl){ URL.revokeObjectURL(objectUrl); objectUrl = null; }
+    photo.value = '';
+    preview.hidden = true;
+    hint.hidden = false;
+    drop.classList.remove('has-file');
+    previewImg.removeAttribute('src');
+  }
+
+  function showFile(file){
+    if(!file) return;
+    if(!OK_TYPES.test(file.type)){ say('That file type is not supported. Send a JPG, PNG or PDF.'); clearFile(); return; }
+    if(file.size > MAX_BYTES){ say('That file is over 10 MB. Send a smaller one, or email it to us.'); clearFile(); return; }
+    say('');
+    previewName.textContent = file.name + '  (' + Math.round(file.size/1024) + ' KB)';
+    if(objectUrl) URL.revokeObjectURL(objectUrl);
+    if(file.type.indexOf('image/') === 0){
+      objectUrl = URL.createObjectURL(file);
+      previewImg.src = objectUrl;
+      previewImg.hidden = false;
+    } else {
+      previewImg.hidden = true;
+    }
+    hint.hidden = true;
+    preview.hidden = false;
+    drop.classList.add('has-file');
+  }
+
+  if(drop && photo){
+    photo.addEventListener('change', function(){ showFile(photo.files[0]); });
+    previewClear.addEventListener('click', function(){ clearFile(); photo.focus(); });
+    ['dragenter','dragover'].forEach(function(ev){
+      drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.add('is-over'); });
+    });
+    ['dragleave','drop'].forEach(function(ev){
+      drop.addEventListener(ev, function(e){ e.preventDefault(); drop.classList.remove('is-over'); });
+    });
+    drop.addEventListener('drop', function(e){
+      var files = e.dataTransfer && e.dataTransfer.files;
+      if(files && files.length){ photo.files = files; showFile(files[0]); }
+    });
+  }
+
+  if(form){
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(document.getElementById('hp').value) return;           // honeypot
+
+      var email = document.getElementById('e'),
+          msg = document.getElementById('m'),
+          btn = form.querySelector('button[type=submit]');
+
+      if(!email.value.trim() || email.value.indexOf('@') < 1){
+        say('Add an email address so we can reply.'); email.focus(); return;
+      }
+      if(!msg.value.trim()){
+        say('Tell us a little about what you want to show people.'); msg.focus(); return;
+      }
+
+      if(!ENDPOINT){
+        var body = 'Name: ' + document.getElementById('n').value +
+                   '\nOrganisation: ' + document.getElementById('o').value +
+                   '\nEmail: ' + email.value + '\n\n' + msg.value;
+        window.location.href = 'mailto:hello@citiesanddesire.com?subject=' +
+          encodeURIComponent('Enquiry from the site') + '&body=' + encodeURIComponent(body);
+        say(photo && photo.files[0]
+            ? 'Opening your mail app. Attach the file there \u2014 email can\u2019t carry it across for us.'
+            : 'Opening your mail app.');
+        return;
+      }
+
+      var data = new FormData(form);
+      btn.disabled = true;
+      var label = btn.textContent;
+      btn.textContent = 'Sending\u2026';
+      say('Sending\u2026');
+
+      fetch(ENDPOINT, { method:'POST', body:data, headers:{ 'Accept':'application/json' } })
+        .then(function(r){ if(!r.ok) throw new Error(r.status); return r; })
+        .then(function(){
+          form.reset(); clearFile();
+          say('Thank you \u2014 we\u2019ll be in touch within a couple of days.');
+        })
+        .catch(function(){
+          say('That didn\u2019t send. Email hello@citiesanddesire.com and we\u2019ll pick it up.');
+        })
+        .finally(function(){ btn.disabled = false; btn.textContent = label; });
+    });
+  }
 })();
 </script>
 </body>
